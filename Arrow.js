@@ -3,19 +3,19 @@
  *
  * @constructor
  * @this  {Arrow}
- * @param {(Vector2|undefined)} pos  Position of the arrow
- * @param {(Number|undefined)} size Size of the arrow
+ * @param {(Vector2|undefined)} position  Position of the arrow
+ * @param {(Vector2|undefined)} direction Vector to copy direction and size
  */
-function Arrow(pos, size) {
-	this.pos   = pos || new Vector2();
-	this.size  = Number(size) || 0;
+function Arrow(position, direction) {
+	this.position  = position  || new Vector2();
+	this.direction = direction || new Vector2();
 	this.speed = 1;
 	this._oneMinusSpeed = 0;
 
-	if(!(this.pos instanceof Vector2))
-		throw new TypeError("pos must be a Vector2");
-	if(isNaN(this.size))
-		throw new TypeError("size must be a number");
+	if(!(this.position instanceof Vector2))
+		throw new TypeError("position must be a Vector2");
+	if(!(this.direction instanceof Vector2))
+		throw new TypeError("direction must be a Vector2");
 }
 
 /**
