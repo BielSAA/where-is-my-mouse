@@ -130,3 +130,20 @@ Vector2.prototype.rotate = function(angle) {
 
 	return this;
 };
+
+/**
+ * Copies coords from `vector` to `this`
+ *
+ * @this   {Vector2}
+ * @param  {Vector2} vector Vector to copy coords from
+ * @return {Vector2}        Returns itself for chaining
+ */
+Vector2.prototype.copyFrom = function(vector) {
+	if(!(vector instanceof Vector2))
+		throw new TypeError("vector must be a vector!");
+
+	this.x = vector.x;
+	this.y = vector.y;
+
+	return this;
+};
