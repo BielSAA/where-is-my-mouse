@@ -71,3 +71,23 @@ Arrow.prototype.teleport = function(pos) {
 
 	return this;
 };
+
+/**
+ * Keeps arrow's size but makes it point to `pos`
+ * 
+ * @this   {Arrow}
+ * @param  {Vector2} pos Position to point to
+ * @return {Arrow}     Returns itself for chaining
+ */
+Arrow.prototype.point = function(pos) {
+	if(!(pos instanceof Vector2))
+		throw new TypeError("pos must be a Vector2");
+
+	let size = this.direction.mag();
+	let newDirection = pos.clone().sub(this.position) // Now it's a vector from `this.position` to `pos`
+			.normalise().scale(size);                 // Now it has the original length
+
+	this.direction.copyFrom(newDirection);
+
+	return this;
+};
