@@ -9,7 +9,7 @@ $(() => {
 		  ARROW_ROTATION   = 0.02;
 
 	const mouse = new Vector2(-1e3, -1e3), // Starting mouse far from screen
-		  arrow = new Arrow(null, new Vector2(ARROW_SIZE, 0)).setSpeed(ARROW_SPEED);  // Starting arrow
+		  arrow = new Arrow().setSpeed(ARROW_SPEED);  // Starting arrow
 	window.arrow = arrow;
 
 	let rotation = 0; // Rotation of the arrow
@@ -32,12 +32,21 @@ $(() => {
 		// Updating rotation
 		rotation = (rotation + ARROW_ROTATION) % (Math.PI * 2);
 
-		// Moving and drawring arrow
+		// Moving arrow
 		let rotationVector = new Vector2(Math.cos(rotation), Math.sin(rotation)) // Magnitude 1
 				.scale(ARROW_DISTANCE);                                          // Magnitude ARROW_DISTANCE
 		let targetPosition = mouse.clone().add(rotationVector);
+		arrow.move(targetPosition);
 
-		arrow.move(targetPosition).point(mouse).draw(ctx);
+		// Shrinking arrow if inside mouse
+		let mouseArrowDistanceSq = mouse.clone().sub(arrow.position).magSq();
+		if(mouseArrowDistanceSq < ARROW_SIZE * ARROW_SIZE)
+			arrow.direction.copyFrom(new Vector2(0, Math.sqrt(mouseArrowDistanceSq)));
+		else
+			arrow.direction.copyFrom(new Vector2(0, ARROW_SIZE));
+
+		//  Pointing to mouse drawing arrow
+		arrow.point(mouse).draw(ctx);
 
 		// Adding next frame to the queue
 		requestAnimationFrame(drawFrame);
