@@ -4,6 +4,8 @@ $(() => {
 
 	const BACKGROUND_COLOR = "#000"; // Color of the page background
 
+	const mouse = new Vector2(-1e3, -1e3); // Starting mouse far from screen
+
 	/**
 	 * Draws a frame and adds the next one to the quere (requestAnimationFrame)
 	 */
@@ -24,4 +26,10 @@ $(() => {
 	}
 	// First frame
 	requestAnimationFrame(drawFrame);
+
+	// Mouse moved, update mouse object
+	$(window).on("mousemove", e => {
+		mouse.x = e.pageX;
+		mouse.y = e.pageY;
+	});
 });
