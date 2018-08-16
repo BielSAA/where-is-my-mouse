@@ -45,7 +45,7 @@ Arrow.prototype.setSpeed = function(speed) {
  * @return {Arrow}     Returns itself for chaining
  */
 Arrow.prototype.move = function(pos) {
-	let currentPosition = this.pos,
+	let currentPosition = this.position,
 		   nextPosition = pos.clone();
 
 	currentPosition.scale(this._oneMinusSpeed);
@@ -64,7 +64,7 @@ Arrow.prototype.move = function(pos) {
  * @return {Arrow}     Returns itself for chaining
  */
 Arrow.prototype.teleport = function(pos) {
-	this.pos.copyFrom(pos);
+	this.position.copyFrom(pos);
 
 	return this;
 };
