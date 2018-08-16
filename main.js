@@ -38,12 +38,16 @@ $(() => {
 		let targetPosition = mouse.clone().add(rotationVector);
 		arrow.move(targetPosition);
 
-		// Shrinking arrow if inside mouse
+		// Shrinking and pushing arrow if inside mouse
 		let mouseArrowDistanceSq = mouse.clone().sub(arrow.position).magSq();
-		if(mouseArrowDistanceSq < ARROW_SIZE * ARROW_SIZE)
-			arrow.direction.copyFrom(new Vector2(0, Math.sqrt(mouseArrowDistanceSq)));
-		else
-			arrow.direction.copyFrom(new Vector2(0, ARROW_SIZE));
+		if(mouseArrowDistanceSq < ARROW_SIZE * ARROW_SIZE){
+			let distance = Math.sqrt(mouseArrowDistanceSq);
+			arrow.direction.copyFrom(new Vector2(0, distance)); // Shrink
+
+			let pushVector = arrow.position.clone().sub(mouse).normalise()     // Vector from mouse to arrow (magnitude 1)
+					.scale(10 * (ARROW_DISTANCE - distance) / ARROW_DISTANCE); // Magnitude that deppends on the distance
+			arrow.position.add(pushVector);
+		}else arrow.direction.copyFrom(new Vector2(0, ARROW_SIZE));
 
 		//  Pointing to mouse drawing arrow
 		arrow.point(mouse).draw(ctx);
