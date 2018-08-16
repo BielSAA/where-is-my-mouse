@@ -45,6 +45,9 @@ Arrow.prototype.setSpeed = function(speed) {
  * @return {Arrow}     Returns itself for chaining
  */
 Arrow.prototype.move = function(pos) {
+	if(!(pos instanceof Vector2))
+		throw new TypeError("pos must be a Vector2");
+
 	let currentPosition = this.position,
 		   nextPosition = pos.clone();
 
