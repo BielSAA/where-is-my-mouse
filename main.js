@@ -5,11 +5,12 @@ $(() => {
 	const BACKGROUND_COLOR = "#000", // Color of the page background
 		  ARROW_DISTANCE   = 250,
 		  ARROW_SIZE       = 100,
-		  ARROW_SPEED      = 0.98,
+		  ARROW_SPEED      = 0.02,
 		  ARROW_ROTATION   = 0.02;
 
 	const mouse = new Vector2(-1e3, -1e3), // Starting mouse far from screen
 		  arrow = new Arrow(null, new Vector2(ARROW_SIZE, 0)).setSpeed(ARROW_SPEED);  // Starting arrow
+	window.arrow = arrow;
 
 	let rotation = 0; // Rotation of the arrow
 
@@ -24,20 +25,19 @@ $(() => {
 			canvas.height = $(window).innerHeight();
 		}
 
+		// Clearing the canvas by filling it with the BACKGROUND_COLOR
+		ctx.fillStyle = BACKGROUND_COLOR;
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 		// Updating rotation
 		rotation = (rotation + ARROW_ROTATION) % (Math.PI * 2);
 
-		// Moving arrow
+		// Moving and drawring arrow
 		let rotationVector = new Vector2(Math.cos(rotation), Math.sin(rotation)) // Magnitude 1
 				.scale(ARROW_DISTANCE);                                          // Magnitude ARROW_DISTANCE
 		let targetPosition = mouse.clone().add(rotationVector);
 
-		arrow.move(targetPosition).point(mouse);
-		
-
-		// Clearing the canvas by filling it with the BACKGROUND_COLOR
-		ctx.fillStyle = BACKGROUND_COLOR;
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
+		arrow.move(targetPosition).point(mouse).draw(ctx);
 
 		// Adding next frame to the queue
 		requestAnimationFrame(drawFrame);

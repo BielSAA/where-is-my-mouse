@@ -91,3 +91,39 @@ Arrow.prototype.point = function(pos) {
 
 	return this;
 };
+
+/**
+ * Draws `this` on canvas context `ctx`
+ * 
+ * @this   {Arrow}
+ * @param  {CanvasRenderingContext2D} ctx canvas context to draw `this` into
+ * @return {Arrow}     Returns itself for chaining
+ */
+Arrow.prototype.draw = function(ctx) {
+	let tail = this.position,
+		tip  = this.position.clone().add(this.direction),
+		tipA = this.direction.clone().rotate(195).normalise().scale(10).add(tip),
+		tipB = this.direction.clone()  // Direction of the arrow
+				.rotate(165)           // Rotated a bit
+				.normalise().scale(10) // 10px long
+				.add(tip);             // Starting in the tip
+
+	ctx.save();
+
+	ctx.strokeStyle = "#FFFFFF";
+	ctx.lineWidth   = 3;
+	ctx.lineCap     = "round";
+	ctx.lineJoin    = "round";
+
+	ctx.beginPath();
+	ctx.moveTo(tail.x, tail.y);
+	ctx.lineTo(tip.x,  tip.y);
+	ctx.lineTo(tipA.x, tipA.y);
+	ctx.moveTo(tipB.x, tipB.y);
+	ctx.lineTo(tip.x,  tip.y);
+	ctx.stroke();
+
+	ctx.restore();
+
+	return this;
+};
