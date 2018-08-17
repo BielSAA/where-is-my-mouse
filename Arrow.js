@@ -6,11 +6,12 @@
  * @param {(Vector2|undefined)} position  Position of the arrow
  * @param {(Vector2|undefined)} direction Vector to copy direction and size
  */
-function Arrow(position, direction) {
+function Arrow(position, direction, color) {
 	this.position  = position  || new Vector2();
 	this.direction = direction || new Vector2();
 	this.speed = 1;
 	this._oneMinusSpeed = 0;
+	this.color = color || "#FFF";
 
 	if(!(this.position instanceof Vector2))
 		throw new TypeError("position must be a Vector2");
@@ -110,7 +111,7 @@ Arrow.prototype.draw = function(ctx) {
 
 	ctx.save();
 
-	ctx.strokeStyle = "#FFFFFF";
+	ctx.strokeStyle = this.color;
 	ctx.lineWidth   = 3;
 	ctx.lineCap     = "round";
 	ctx.lineJoin    = "round";

@@ -2,7 +2,8 @@ $(() => {
 	const canvas = document.getElementById("mouse"),
 			 ctx = canvas.getContext("2d");
 
-	const BACKGROUND_COLOR = "#000", // Color of the page background
+	const BACKGROUND_COLOR = "#2E112D", // Color of the page background
+		  ARROW_COLOR      = "#F0433A",
 		  ARROW_DISTANCE   = 250,
 		  ARROW_SIZE       = 100,
 		  ARROW_SPEED      = 0.02,
@@ -13,7 +14,7 @@ $(() => {
 
 	const mouse = new Vector2(-1e3, -1e3), // Starting mouse far from screen
 		  arrow = new Arrow().setSpeed(ARROW_SPEED);  // Starting arrow
-	window.arrow = arrow;
+	arrow.color = ARROW_COLOR;
 
 	let rotation = 0; // Rotation of the arrow
 
