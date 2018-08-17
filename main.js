@@ -6,7 +6,10 @@ $(() => {
 		  ARROW_DISTANCE   = 250,
 		  ARROW_SIZE       = 100,
 		  ARROW_SPEED      = 0.02,
-		  ARROW_ROTATION   = 0.02;
+		  ARROW_ROTATION   = 0.02,
+		  MOUSE_PUSH       = 7;
+
+	const ARROW_DISTANCE_SQ = ARROW_DISTANCE * ARROW_DISTANCE;
 
 	const mouse = new Vector2(-1e3, -1e3), // Starting mouse far from screen
 		  arrow = new Arrow().setSpeed(ARROW_SPEED);  // Starting arrow
@@ -49,7 +52,6 @@ $(() => {
 		else if(arrow.position.y > canvas.height)
 			arrow.position.y = canvas.height;
 
-
 		// Shrinking and pushing arrow if inside mouse
 		let mouseArrowDistanceSq = mouse.clone().sub(arrow.position).magSq();
 		if(mouseArrowDistanceSq < ARROW_SIZE * ARROW_SIZE){
@@ -57,7 +59,7 @@ $(() => {
 			arrow.direction.copyFrom(new Vector2(0, distance)); // Shrink
 
 			let pushVector = arrow.position.clone().sub(mouse).normalise()     // Vector from mouse to arrow (magnitude 1)
-					.scale(10 * (ARROW_DISTANCE - distance) / ARROW_DISTANCE); // Magnitude that deppends on the distance
+					.scale(MOUSE_PUSH * (ARROW_DISTANCE_SQ - mouseArrowDistanceSq) / ARROW_DISTANCE_SQ); // Magnitude that deppends on the distance
 			arrow.position.add(pushVector);
 		}else arrow.direction.copyFrom(new Vector2(0, ARROW_SIZE));
 
