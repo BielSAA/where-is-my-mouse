@@ -38,6 +38,18 @@ $(() => {
 		let targetPosition = mouse.clone().add(rotationVector);
 		arrow.move(targetPosition);
 
+		// "Colliding" with border
+		if(arrow.position.x < 0)
+			arrow.position.x = 0;
+		else if(arrow.position.x > canvas.width)
+			arrow.position.x = canvas.width;
+
+		if(arrow.position.y < 0)
+			arrow.position.y = 0;
+		else if(arrow.position.y > canvas.height)
+			arrow.position.y = canvas.height;
+
+
 		// Shrinking and pushing arrow if inside mouse
 		let mouseArrowDistanceSq = mouse.clone().sub(arrow.position).magSq();
 		if(mouseArrowDistanceSq < ARROW_SIZE * ARROW_SIZE){
