@@ -60,7 +60,7 @@ $(() => {
 			arrow.direction.copyFrom(new Vector2(0, distance)); // Shrink
 
 			let pushVector = arrow.position.clone().sub(mouse).normalise()     // Vector from mouse to arrow (magnitude 1)
-					.scale(MOUSE_PUSH * (ARROW_DISTANCE_SQ - mouseArrowDistanceSq) / ARROW_DISTANCE_SQ); // Magnitude that deppends on the distance
+					.scale(Math.min(MOUSE_PUSH * (ARROW_DISTANCE_SQ - mouseArrowDistanceSq) / ARROW_DISTANCE_SQ, ARROW_SIZE - distance)); // Magnitude that deppends on the distance
 			arrow.position.add(pushVector);
 		}else arrow.direction.copyFrom(new Vector2(0, ARROW_SIZE));
 
