@@ -1,4 +1,4 @@
-$(() => {
+window.addEventListener("load", () => {
 	const canvas = document.getElementById("mouse"),
 			 ctx = canvas.getContext("2d");
 
@@ -23,10 +23,10 @@ $(() => {
 	 */
 	function drawFrame() {
 		// Checking if it's different before updating because canvas.width and canvas.height are setters
-		if(canvas.width != $(window).innerWidth()
-				|| canvas.height != $(window).innerHeight()){
-			canvas.width = $(window).innerWidth();
-			canvas.height = $(window).innerHeight();
+		if(canvas.width != window.innerWidth
+				|| canvas.height != window.innerHeight){
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
 		}
 
 		// Clearing the canvas by filling it with the BACKGROUND_COLOR
@@ -74,7 +74,7 @@ $(() => {
 	requestAnimationFrame(drawFrame);
 
 	// Mouse moved, update mouse object
-	$(window).on("mousemove", e => {
+	window.addEventListener("mousemove", e => {
 		mouse.x = e.pageX;
 		mouse.y = e.pageY;
 	});
